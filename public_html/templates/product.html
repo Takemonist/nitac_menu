@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Product</title>
+  <style>
+    table {
+      border-collapse: collapse;
+      width: 50%; /* Adjust table width as needed */
+      margin: 20px auto; /* Center the table horizontally */
+    }
+
+    th, td {
+      border: 1px solid black;
+      padding: 8px;
+      text-align: center; /* Center content within cells */
+    }
+  </style>
+</head>
+<body>
+  <h1>{{ product[1] }}</h1>
+  <p>Description: {{ product[2] }}</p>
+  <p>Price: {{ product[3] }}</p>
+  <table>
+    <thead>
+      <tr>
+        {% for allergen in allergen_table %}
+          <th>{{ allergen }}</th>
+        {% endfor %}
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        {% for data in allergen_data %}
+          <td>{{ data }}</td>
+        {% endfor %}
+      </tr>
+    </tbody>
+  </table>
+</body>
+</html>

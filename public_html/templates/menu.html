@@ -1,0 +1,14 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Menu</title>
+</head>
+<body>
+  <h1>{{ category }} Menu</h1>
+  <ul>
+    {% for product in products %}
+      <li><a href="/products/{{ product[0] }}">{{ product[1] }}</a></li>
+    {% endfor %}
+  </ul>
+</body>
+</html>
