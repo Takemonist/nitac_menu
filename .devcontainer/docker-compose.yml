@@ -8,19 +8,34 @@ services:
     volumes:
       - ../..:/workspaces:cached
     command: sleep infinity
+    # SSH 接続を公開
     ports:
-      - "2222:22" # ホストのポート 2222 をコンテナのポート 22 にマッピング
-      - "8086:8086"
-      - "5000:5000"
+      - "2222:22" 
+      - "8086:8086"  # ホストのポート 2222 をコンテナのポート 22 にマッピング
+    # 明示的に db と同じネットワークに参加
+    networks:
+      - app-db-network
+
   db:
     image: postgres:latest
     restart: unless-stopped
+    # db コンテナはポートマッピング
+    ports:
+      - "5432:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
     environment:
       POSTGRES_USER: team6
       POSTGRES_DB: team6db
       POSTGRES_PASSWORD: postgres
+    # ネットワーク設定
+    networks:
+      - app-db-network
+
+# ネットワーク定義
+networks:
+  app-db-network: 
+    # driver: bridge  # デフォルトなので省略可能
 
 volumes:
   postgres-data:

@@ -8,9 +8,11 @@
 - allergens bit(n)
 - available_date date
 
-## How to setup DB
+## How to setup
 
 ```
-psql -h localhost -U team6 -d team6db -f setup.sql
-psql -h localhost -U team6 -d team6db -f products.sql
+sudo service ssh start
+sudo service postgresql start
+psql -h db -U team6 -d team6db -f public_html/DB/setup.sql
+psql -h db -U team6 -d team6db -f public_html/DB/products.sql
 ```
