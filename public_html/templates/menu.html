@@ -2,13 +2,48 @@
 <html>
 <head>
   <title>Menu</title>
+  <link rel="stylesheet" href="menu.css">
 </head>
 <body>
+  <h1>Categories</h1>
+  <ul>
+    <li><a href="/menu/NOODLE" data-category="NOODLE">麺類</a></li>
+    <li><a href="/menu/RICE" data-category="RICE">丼・カレー</a></li>
+    <li><a href="/menu/AB" data-category="AB">セット</a></li>
+  </ul>
+
+  <div id="menu-items">
+    </div>
+
+  <script src="menu.js"></script>
+</body>
+</html>
+
+
+<!-- <body>
+  <h1>Categories</h1>
+  <ul>
+    {% for category in categories %}
+      <li><a href="/menu/{{ category }}">{{ category }}</a></li>
+    {% endfor %}
+  </ul>
+</body> -->
+
+<!-- <body>
   <h1>{{ category }} Menu</h1>
   <ul>
     {% for product in products %}
       <li><a href="/products/{{ product[0] }}">{{ product[1] }}</a></li>
     {% endfor %}
   </ul>
-</body>
-</html>
+</body> -->
+
+<!--<a href="#" class="link-box">
+  <div class="content">
+    <img src="{{ image }}" alt="{{ product[0] }}">
+    <div class="text">
+      <h2>{{ product[0] }}</h2>
+      <p>{{ product[1] }}</p>
+    </div>
+  </div>
+</a> -->

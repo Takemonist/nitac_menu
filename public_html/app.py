@@ -4,7 +4,15 @@ from datetime import date, timedelta
 
 app = Flask(__name__)
 
-# データベース接続情報
+# データベース接続情報(School)
+# DATABASE_CONFIG = {
+#     'host': "localhost",
+#     'database': "team6db",
+#     'user': "team6",
+#     'password': "1qazxsw2"
+# }
+
+# データベース接続情報(Home)
 DATABASE_CONFIG = {
     'host': "db",
     'database': "team6db",
@@ -92,16 +100,19 @@ product_service = ProductService(product_repository)
 
 @app.route('/')
 def home():
+    today = date.today()
     categories = product_repository.get_categories()
-    return render_template('index.html', categories=categories)
+    products = product_service.get_products_by_date_and_category(today, "AB")
+    return render_template('index.html', categories=categories, products=products)
 
 @app.route('/menu/<category>')
 def menu(category):
     # 今日の日付を取得
-    # today = date.today()
-    today = date(2023,6,3)
+    today = date.today()
+    #today = date(2023,6,3)
+    categories = product_repository.get_categories()
     products = product_service.get_products_by_date_and_category(today, category)
-    return render_template('menu.html', category=category, products=products)
+    return render_template('menu.html', categories=categories, products=products)
 
 @app.route('/products/<id>')
 def products(id):
