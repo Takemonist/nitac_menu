@@ -62,6 +62,15 @@ class ProductRepository:
           """, (target_date, category))
           return cur.fetchall()
 
+    def get_all_products_by_date(self, target_date):
+        with self.get_db_connection() as conn:
+            with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT * FROM products
+                    WHERE date(available_date) = %s
+                """, (target_date,))
+                return cur.fetchall()
+
 # --- サービス層 ---
 class ProductService:
     def __init__(self, repository):
@@ -92,6 +101,9 @@ class ProductService:
     def get_products_by_date_and_category(self, target_date, category):
         return self.repository.get_products_by_date_and_category(target_date, category)
 
+    def get_all_products_by_date(self, target_date):
+        return self.repository.get_all_products_by_date(target_date)
+
 
 # --- Flask アプリケーション ---
 # リポジトリとサービスのインスタンスを作成
@@ -103,15 +115,16 @@ def home():
     today = date.today()
     categories = product_repository.get_categories()
     products = product_service.get_products_by_date_and_category(today, "AB")
-    return render_template('index.html', categories=categories, products=products)
+    #return render_template('index.html', categories=categories, products=products)
+    return redirect(url_for('menu'))
 
-@app.route('/menu/<category>')
-def menu(category):
+@app.route('/menu/')
+def menu():
     # 今日の日付を取得
     today = date.today()
-    #today = date(2023,6,3)
+    today = date(2024,6,3)
     categories = product_repository.get_categories()
-    products = product_service.get_products_by_date_and_category(today, category)
+    products = product_service.get_all_products_by_date(today) # 全ての商品を取得
     return render_template('menu.html', categories=categories, products=products)
 
 @app.route('/products/<id>')
