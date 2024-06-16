@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/menu.css') }}">
   <script type="importmap">
     {
       "imports": {
@@ -18,220 +19,209 @@
 
     document.adoptedStyleSheets.push(typescaleStyles.styleSheet);
   </script>
-  <style>
-    body {
-      background-color: #F5F5F5;
-      font-family: 'Roboto', sans-serif;
-      margin: 0; /* リセット */
-    }
-
-    #menu-items {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2列表示 */
-      grid-gap: 16px; 
-      padding: 16px;
-    }
-
-    .product-card {
-      background-color: #fff;
-      border-radius: 8px;
-      box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
-      overflow: hidden;
-      /* Elevation を適用 */
-      position: relative;
-      --md-elevation-level: 3;
-      margin: 8px; /* カード間のマージン */
-    }
-
-    .product-card .mdc-card__media {
-      height: 200px; /* スマートフォンでは画像を大きく */
-      background-color: #FFECB3;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      /* 下側の角を丸くする */
-      border-bottom-left-radius: 8px;
-      border-bottom-right-radius: 8px;
-    }
-
-    .product-card .category-icon {
-      font-size: 80px; /* アイコンサイズを大きく */
-      color: #D84315;
-    }
-
-    .product-card .mdc-card__primary-action {
-      padding: 16px;
-      color: #333333;
-      text-decoration: none;
-      display: block;
-    }
-
-    .product-card h2 {
-      font-size: 2.0em; /* タイトルサイズを大きく */
-      margin: 0 0 8px 0;
-    }
-
-    .product-card .name {
-      font-size: 1.2em; /* 商品名サイズを大きく */
-      color: #795548;
-    }
-
-    .mdc-card__actions {
-      font-size: 1.5em;
-      display: flex;
-      justify-content: space-between; /* ボタンを左右に配置 */
-      padding: 16px;
-    }
-
-    .status-button {
-      padding: 8px 16px;
-      border-radius: 4px;
-      font-weight: bold;
-      text-transform: uppercase;
-    }
-
-    .status-button.in-stock {
-      background-color: #43A047;
-      color: white;
-    }
-
-    .status-button.sold-out {
-      background-color: #B71C1C;
-      color: white;
-    }
-
-    .price::before {
-      content: "￥";
-    }
-
-    /* タブのスタイル */
-    md-tabs {
-      --md-sys-color-surface-tint: #D84315; /* サーフェストンカラーをオレンジに設定 */
-      --md-sys-color-primary: #D84315;      /* プライマリカラーをオレンジに設定 */
-      --md-primary-tab-active-indicator-color: #D84315; /* アクティブなタブのインジケーターの色を変更 */
-    }
-  </style>
 </head>
 <body>
-  <md-tabs>
-    <md-primary-tab id="AB-tab" active>
-      <md-icon slot="icon">restaurant_menu</md-icon>
-      日替わり
-    </md-primary-tab>
-    <md-primary-tab id="RICE-tab">
-      <md-icon slot="icon">rice_bowl</md-icon>
-      丼・カレー
-    </md-primary-tab>
-    <md-primary-tab id="NOODLE-tab">
-      <md-icon slot="icon">ramen_dining</md-icon>
-      麺類
-    </md-primary-tab>
-  </md-tabs>
+  <div id="main-content" style="display: none;"> 
+    <md-tabs id="top-tabs">
+      <md-primary-tab id="AB-tab" active>
+        <md-icon slot="icon">restaurant_menu</md-icon>
+        日替わり
+      </md-primary-tab>
+      <md-primary-tab id="RICE-tab">
+        <md-icon slot="icon">rice_bowl</md-icon>
+        丼・カレー
+      </md-primary-tab>
+      <md-primary-tab id="NOODLE-tab">
+        <md-icon slot="icon">ramen_dining</md-icon>
+        麺類
+      </md-primary-tab>
+    </md-tabs>
 
-  <div id="menu-items">
-    <div id="NOODLE-panel" role="tabpanel" aria-labelledby="NOODLE-tab" hidden>
-      {% for product in products %}
-        {% if product[3] == "NOODLE" %}
-        <div class="product-card mdc-card">
-          <md-elevation></md-elevation>
-          <div class="mdc-card__media">
-              <span class="material-symbols-outlined category-icon">ramen_dining</span>
-          </div>
-          <a href="/products/{{ product[0] }}" class="mdc-card__primary-action">
-            <div class="mdc-card__primary-action">
-              <h2>{{ product[1] }}</h2>
+    <div id="menu-items">
+      <div id="AB-panel" role="tabpanel" aria-labelledby="AB-tab"> 
+        {% for product in products %}
+          {% if product[3] == "AB" %}
+          <a href="/products/{{ product[0] }}" class="product-card-link">
+            <div class="product-card mdc-card">
+              <md-elevation></md-elevation>
+              <div class="mdc-card__media">
+                <md-ripple class="unbounded"></md-ripple> <span class="material-symbols-outlined category-icon">restaurant_menu</span>
+              </div>
+              <div class="mdc-card__primary-action">
+                <md-ripple></md-ripple>
+                <h2>{{ product[1] }}</h2>
+              </div>
+              <md-divider></md-divider>
+              <div class="mdc-card__actions">
+                <md-ripple></md-ripple>
+                <div class="name"><span class="price">{{ product[2] }}</span></div>
+                <div class="status-button 
+                            {% if product[4] %} 
+                                sold-out
+                            {% else %}
+                                in-stock
+                            {% endif %}">
+                  <md-ripple></md-ripple>
+                  {% if product[4] %}
+                    Sold Out
+                  {% else %}
+                    In Stock
+                  {% endif %}
+                </div>
+              </div>
             </div>
           </a>
-          <div class="mdc-card__actions">
-            <div class="name"><span class="price">{{ product[2] }}</span></div>
-            <div class="status-button 
-                        {% if product[4] %} 
-                            sold-out
-                        {% else %}
-                            in-stock
-                        {% endif %}">
-              {% if product[4] %}
-                Sold Out
-              {% else %}
-                In Stock
-              {% endif %}
-            </div>
-          </div>
-        </div>
-        {% endif %}
-      {% endfor %}
-    </div>
-    <div id="RICE-panel" role="tabpanel" aria-labelledby="RICE-tab" hidden>
-      {% for product in products %}
-        {% if product[3] == "RICE" %}
-        <div class="product-card mdc-card">
-          <md-elevation></md-elevation>
-          <div class="mdc-card__media">
-              <span class="material-symbols-outlined category-icon">rice_bowl</span>
-          </div>
-          <a href="/products/{{ product[0] }}" class="mdc-card__primary-action">
-            <div class="mdc-card__primary-action">
-              <h2>{{ product[1] }}</h2>
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div id="RICE-panel" role="tabpanel" aria-labelledby="RICE-tab" hidden>
+        {% for product in products %}
+          {% if product[3] == "RICE" %}
+          <a href="/products/{{ product[0] }}" class="product-card-link">
+            <div class="product-card mdc-card">
+              <md-elevation></md-elevation>
+              <div class="mdc-card__media">
+                <md-ripple class="unbounded"></md-ripple>
+                <span class="material-symbols-outlined category-icon">rice_bowl</span>
+              </div>
+              <div class="mdc-card__primary-action">
+                <md-ripple></md-ripple>
+                <h2>{{ product[1] }}</h2>
+              </div>
+              <md-divider></md-divider>
+              <div class="mdc-card__actions">
+                <md-ripple></md-ripple>
+                <div class="name"><span class="price">{{ product[2] }}</span></div>
+                <div class="status-button 
+                            {% if product[4] %} 
+                                sold-out
+                            {% else %}
+                                in-stock
+                            {% endif %}">
+                  <md-ripple></md-ripple>
+                  {% if product[4] %}
+                    Sold Out
+                  {% else %}
+                    In Stock
+                  {% endif %}
+                </div>
+              </div>
             </div>
           </a>
-          <div class="mdc-card__actions">
-            <div class="name"><span class="price">{{ product[2] }}</span></div>
-            <div class="status-button 
-                        {% if product[4] %} 
-                            sold-out
-                        {% else %}
-                            in-stock
-                        {% endif %}">
-              {% if product[4] %}
-                Sold Out
-              {% else %}
-                In Stock
-              {% endif %}
+          {% endif %}
+        {% endfor %}
+      </div>
+      <div id="NOODLE-panel" role="tabpanel" aria-labelledby="NOODLE-tab" hidden>
+        {% for product in products %}
+          {% if product[3] == "NOODLE" %}
+          <a href="/products/{{ product[0] }}" class="product-card-link">
+            <div class="product-card mdc-card">
+              <md-elevation></md-elevation>
+              <div class="mdc-card__media">
+                <md-ripple class="unbounded"></md-ripple>
+                <span class="material-symbols-outlined category-icon">ramen_dining</span>
+              </div>
+              <div class="mdc-card__primary-action">
+                <md-ripple></md-ripple>
+                <h2>{{ product[1] }}</h2>
+              </div>
+              <md-divider></md-divider>
+              <div class="mdc-card__actions">
+                <md-ripple></md-ripple>
+                <div class="name"><span class="price">{{ product[2] }}</span></div>
+                <div class="status-button 
+                            {% if product[4] %} 
+                                sold-out
+                            {% else %}
+                                in-stock
+                            {% endif %}">
+                  <md-ripple></md-ripple>
+                  {% if product[4] %}
+                    Sold Out
+                  {% else %}
+                    In Stock
+                  {% endif %}
+                </div>
+              </div>
             </div>
-          </div>
-        </div>
-        {% endif %}
-      {% endfor %}
+          </a>
+          {% endif %}
+        {% endfor %}
+      </div>
     </div>
-    <div id="AB-panel" role="tabpanel" aria-labelledby="AB-tab">
+  </div>
+  <div id="home-content">
+    <h1>nitac_menu</h1>
+    <h2>本日の日替わりメニュー</h2>
+    <div id="AB-set">
       {% for product in products %}
         {% if product[3] == "AB" %}
-        <div class="product-card mdc-card">
-          <md-elevation></md-elevation>
-          <div class="mdc-card__media">
-              <span class="material-symbols-outlined category-icon">restaurant_menu</span>
-          </div>
-          <a href="/products/{{ product[0] }}" class="mdc-card__primary-action">
-            <div class="mdc-card__primary-action">
-              <h2>{{ product[1] }}</h2>
+        <a href="/products/{{ product[0] }}" class="product-card-link">
+          <div class="home-product-card">
+            <div class="mdc-card mdc-card--outlined">
+              <md-elevation></md-elevation>
+              <div class="mdc-card__media">
+                <md-ripple class="unbounded"></md-ripple>
+                <span class="material-symbols-outlined category-icon">restaurant_menu</span>
+              </div>
+              <div class="mdc-card__primary-action">
+                <md-ripple></md-ripple>
+                <h2>{{ product[1] }}</h2>
+              </div>
+              <md-divider></md-divider>
+              <div class="mdc-card__actions">
+                <md-ripple></md-ripple>
+                <div class="name"><span class="price">{{ product[2] }}</span></div>
+                <div class="status-button 
+                            {% if product[4] %} 
+                                sold-out
+                            {% else %}
+                                in-stock
+                            {% endif %}">
+                  <md-ripple></md-ripple>
+                  {% if product[4] %}
+                    Sold Out
+                  {% else %}
+                    In Stock
+                  {% endif %}
+                </div>
+              </div>
             </div>
-          </a>
-          <div class="mdc-card__actions">
-            <div class="name"><span class="price">{{ product[2] }}</span></div>
-            <div class="status-button 
-                        {% if product[4] %} 
-                            sold-out
-                        {% else %}
-                            in-stock
-                        {% endif %}">
-              {% if product[4] %}
-                Sold Out
-              {% else %}
-                In Stock
-              {% endif %}
-            </div>
           </div>
-        </div>
+        </a>
         {% endif %}
       {% endfor %}
     </div>
   </div>
+  <md-tabs id="bottom-tabs">
+    <md-primary-tab id="home-tab" active>
+      <md-icon slot="icon">home</md-icon>
+      ホーム
+    </md-primary-tab>
+    <md-primary-tab id="menu-tab">
+      <md-icon slot="icon">menu_book</md-icon>
+      メニュー
+    </md-primary-tab>
+  </md-tabs>
 
   <script>
-    const tabs = document.querySelector('md-tabs');
+    const topTabs = document.querySelector('#top-tabs');
+    const bottomTabs = document.querySelector('#bottom-tabs');
+    const mainContent = document.querySelector('#main-content');
+    const homeContent = document.querySelector('#home-content');
     const panels = document.querySelectorAll('[role="tabpanel"]');
 
-    tabs.addEventListener('change', (event) => {
+    bottomTabs.addEventListener('change', (event) => {
+        if (event.target.activeTab.id === 'home-tab'){
+            mainContent.style.display = 'none';
+            homeContent.style.display = 'block';
+        } else {
+            mainContent.style.display = 'block';
+            homeContent.style.display = 'none';
+        }
+    });
+
+    topTabs.addEventListener('change', (event) => {
       const activeTab = event.target.activeTab;
       const activePanelId = activeTab.id.replace('-tab', '-panel');
 
@@ -240,14 +230,9 @@
 
       // アクティブなタブに対応するパネルを表示する
       document.getElementById(activePanelId).hidden = false;
-    });
 
-    // タブのクリックイベントで activeTabIndex を設定
-    tabs.querySelectorAll('md-primary-tab').forEach((tab, index) => {
-      tab.addEventListener('click', (event) => {
-        event.preventDefault(); // デフォルトのリンク動作を無効にする
-        tabs.activeTabIndex = index; // クリックされたタブのインデックスを設定
-      });
+      // スクロールを一番上にリセットする
+      window.scrollTo(0, 0);
     });
   </script>
 </body>

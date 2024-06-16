@@ -1,0 +1,193 @@
+body {
+  background-color: #F5F5F5;
+  font-family: 'Roboto', sans-serif;
+  margin: 0; /* リセット */
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh; /* 画面全体を覆う */
+}
+
+#main-content {
+  flex: 1; /* 画面の残りのスペースを占有 */
+  padding-top: 64px; /* 上部のタブの高さ分だけパディングを追加 */ 
+}
+
+#menu-items {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* 2列表示 */
+  grid-gap: 30px; 
+  margin-left: 2%;
+  margin-right: 2%;
+  padding-bottom: 64px; /* 下部のタブの高さ分だけパディングを追加 */
+}
+
+#AB-set {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 2fr)); /* 2列表示 */
+  grid-gap: 2%;
+  margin-left: 4%;
+  margin-right: 4%;
+}
+
+/* メニュータブのカードスタイル */
+.product-card {
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Elevation を適用 */
+  position: relative;
+  --md-elevation-level: 3;
+  margin: 8px; /* カード間のマージン */
+}
+
+.product-card .mdc-card__media {
+  height: 200px; /* スマートフォンでは画像を大きく */
+  background-color: #FFECB3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 下側の角を丸くする */
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.product-card .category-icon {
+  font-size: 140px; /* アイコンサイズを大きく */
+  color: #D84315;
+}
+
+.product-card .mdc-card__primary-action {
+  padding: 16px;
+  color: #333333;
+  text-decoration: none;
+  display: block;
+}
+
+.product-card h2 {
+  font-size: 2.0em; /* タイトルサイズを大きく */
+  margin: 0 0 8px 0;
+}
+
+.product-card .name {
+  font-size: 1.2em; /* 商品名サイズを大きく */
+  color: #795548;
+}
+
+.product-card .mdc-card__actions {
+  font-size: 1.5em;
+  display: flex;
+  justify-content: space-between; /* ボタンを左右に配置 */
+  padding: 16px;
+}
+
+.product-card .status-button {
+  padding: 8px 16px;
+  border-radius: 24px;
+  font-weight: bold;
+  text-transform: uppercase;
+  display: flex;
+  justify-content: center; /* 横方向中央揃え */
+  align-items: center; /* 縦方向中央揃え */
+}
+
+.product-card-link { /* リンクのスタイル */
+  text-decoration: none; /* デフォルトのアンダーラインを削除 */
+  color: inherit; /* 親要素の色を継承 */
+}
+
+.home-product-card .mdc-card { /* mdc-card のスタイルを直接上書き */
+  width: 100%;
+  background-color: #fff;
+  border-radius: 16px;
+  box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+  /* Elevation を適用 */
+  position: relative;
+  --md-elevation-level: 3;
+}
+
+.home-product-card .mdc-card__media {
+  height: 130px; /* 高さを調整 */
+  background-color: #FFECB3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /* 下側の角を丸くする */
+  border-bottom-left-radius: 16px;
+  border-bottom-right-radius: 16px;
+}
+
+.home-product-card .category-icon {
+  font-size: 80px; /* アイコンサイズを調整 */
+  color: #D84315;
+}
+
+.home-product-card .mdc-card__primary-action {
+  padding: 10px; /* パディングを調整 */
+  color: #333333;
+  text-decoration: none;
+  display: block;
+}
+
+.home-product-card h2 {
+  font-size: 1.0em; /* フォントサイズを調整 */
+  margin: 0 0 4px 0; /* マージンを調整 */
+}
+
+.home-product-card .name {
+  font-size: 1.0em; /* 商品名サイズを大きく */
+  color: #795548;
+}
+.home-product-card .mdc-card__actions {
+  font-size: 1.2em;
+  display: flex;
+  justify-content: space-between; /* ボタンを左右に配置 */
+  padding: 8px;
+}
+
+.home-product-card .status-button {
+  padding: 4px 8px;
+  border-radius: 16px;
+  font-weight: bold;
+  text-transform: uppercase;
+  font-size: 0.7em;
+  display: flex;
+  justify-content: center; /* 横方向中央揃え */
+  align-items: center; /* 縦方向中央揃え */
+}
+
+.status-button.in-stock {
+  background-color: #43A047;
+  color: white;
+}
+
+.status-button.sold-out {
+  background-color: #B71C1C;
+  color: white;
+}
+
+.price::before {
+  content: "￥";
+}
+
+/* タブのスタイル */
+md-tabs {
+  --md-sys-color-surface-tint: #D84315; /* サーフェストンカラーをオレンジに設定 */
+  --md-sys-color-primary: #D84315;      /* プライマリカラーをオレンジに設定 */
+  --md-primary-tab-active-indicator-color: #D84315; /* アクティブなタブのインジケーターの色を変更 */
+  position: fixed; /* 画面に固定 */
+  left: 0;
+  width: 100%;
+  z-index: 10; /* 他の要素の上に表示 */
+}
+
+/* 上部のタブ */
+#main-content > md-tabs {
+  top: 0; 
+}
+
+/* 下部のタブ */
+body > md-tabs {
+  bottom: 0;
+}

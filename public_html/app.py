@@ -85,7 +85,7 @@ class ProductService:
         allergen_table = [
             "小麦", "卵", "乳", "そば", "落花生", "えび", "かに"
         ]
-        allergen_data = ["o" if int(product[5]) & (64 >> i) else " " for i in range(7)]
+        allergen_data = ["〇" if int(product[5]) & (64 >> i) else " " for i in range(7)]
         
         return {
             'product': product,
@@ -112,10 +112,10 @@ product_service = ProductService(product_repository)
 
 @app.route('/')
 def home():
-    today = date.today()
-    categories = product_repository.get_categories()
-    products = product_service.get_products_by_date_and_category(today, "AB")
-    #return render_template('index.html', categories=categories, products=products)
+#     today = date.today()
+#     categories = product_repository.get_categories()
+#     products = product_service.get_products_by_date_and_category(today, "AB")
+#     return render_template('index.html', categories=categories, products=products)
     return redirect(url_for('menu'))
 
 @app.route('/menu/')
