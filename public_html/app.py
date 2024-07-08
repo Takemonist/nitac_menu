@@ -5,20 +5,20 @@ from datetime import date, timedelta
 app = Flask(__name__)
 
 # データベース接続情報(School)
-# DATABASE_CONFIG = {
-#     'host': "localhost",
-#     'database': "team6db",
-#     'user': "team6",
-#     'password': "1qazxsw2"
-# }
-
-# データベース接続情報(Home)
 DATABASE_CONFIG = {
-    'host': "db",
+    'host': "localhost",
     'database': "team6db",
     'user': "team6",
-    'password': "postgres"
+    'password': "1qazxsw2"
 }
+
+#データベース接続情報(Home)
+# DATABASE_CONFIG = {
+#     'host': "db",
+#     'database': "team6db",
+#     'user': "team6",
+#     'password': "postgres"
+# }
 
 # --- リポジトリ層 ---
 class ProductRepository:
@@ -82,10 +82,18 @@ class ProductService:
     
     def get_product_details(self, id):
         product = self.repository.get_product_by_id(id)
+        if product is None:
+            return None  # または適切なエラーハンドリング
+
+        try:
+            allergen_flag = int(product[5])
+        except ValueError:
+            return None  # または適切なエラーハンドリング
+
         allergen_table = [
             "小麦", "卵", "乳", "そば", "落花生", "えび", "かに"
         ]
-        allergen_data = ["〇" if int(product[5]) & (64 >> i) else " " for i in range(7)]
+        allergen_data = ["〇" if allergen_flag & (64 >> i) else " " for i in range(7)]
         
         return {
             'product': product,
@@ -122,14 +130,22 @@ def home():
 def menu():
     # 今日の日付を取得
     today = date.today()
-    today = date(2024,6,3)
+    #today = date(2024,6,10)
+    # 今日が土曜日または日曜日であれば、次の月曜日の日付を設定
+    if today.weekday() == 5:  # 5は土曜日
+        today = today + timedelta(days=2)
+    elif today.weekday() == 6:  # 6は日曜日
+        today = today + timedelta(days=1)
     categories = product_repository.get_categories()
     products = product_service.get_all_products_by_date(today) # 全ての商品を取得
     return render_template('menu.html', categories=categories, products=products)
 
-@app.route('/products/<id>')
+@app.route('/products/<int:id>')  # idを整数として受け取るように変更
 def products(id):
     product_details = product_service.get_product_details(id)
+    # product_detailsがNoneでないこと、かつproduct_details内の'product'キーが存在することを確認
+    if product_details is None or product_details.get('product') is None:  # 商品が存在しない場合
+        return redirect(url_for('menu'))  # menuにリダイレクト
     return render_template('product.html', **product_details)
 
 @app.route('/soldout/<id>/<is_sold_out>')
@@ -138,4 +154,4 @@ def soldout(id: int, is_sold_out: bool):
     return redirect(url_for('products', id=id))
 
 if __name__ == '__main__':
-    app.run(host='0.0.0.0', port=8086, debug=True)
+    app.run(host='0.0.0.0', port=8086)

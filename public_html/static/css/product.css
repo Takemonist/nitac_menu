@@ -17,7 +17,7 @@ md-icon-button {
   width: calc(100% - 32px); /* 画面幅いっぱいに表示、左右に16pxのマージン */
   background-color: #fff;
   border-radius: 16px;
-  margin: 80px 16px 16px 16px; /* 上マージンを 80px に変更 */
+  margin: 70px 16px 16px 16px; /* 上マージンを 80px に変更 */
   box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.1);
   overflow: hidden;
   /* Elevation を適用 */
@@ -42,7 +42,7 @@ md-icon-button {
 }
 
 .product-card .mdc-card__primary-action {
-  padding: 16px;
+  padding: 4%;
   color: #333333;
   text-decoration: none;
   display: block;
@@ -50,7 +50,6 @@ md-icon-button {
 
 .product-card h2 {
   font-size: 2.0em; /* タイトルサイズを大きく */
-  margin: 0 0 8px 0;
 }
 
 .product-card .name {
@@ -62,7 +61,8 @@ md-icon-button {
   font-size: 1.5em;
   display: flex;
   justify-content: space-between; /* ボタンを左右に配置 */
-  padding: 16px;
+  padding: 4%;
+  align-items: center;
 }
 
 .status-button {

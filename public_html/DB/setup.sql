@@ -1,6 +1,6 @@
 DROP TABLE IF EXISTS products;
 DROP TYPE IF EXISTS product_category;
-CREATE TYPE product_category AS ENUM ('AB', 'NOODLE', 'RICE', 'CURRY'); -- ここにカテゴリーを追加してください
+CREATE TYPE product_category AS ENUM ('AB', 'RAMEN', 'UDON', 'RICE', 'CURRY', 'OTHER'); -- ここにカテゴリーを追加してください
 CREATE TABLE products (
   ID SERIAL PRIMARY KEY,
   name TEXT NOT NULL,

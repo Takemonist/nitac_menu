@@ -28,6 +28,14 @@ body {
   margin-left: 4%;
   margin-right: 4%;
 }
+#week-set {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(150px, 2fr)); /* 2列表示 */
+  grid-gap: 2%;
+  margin-left: 4%;
+  margin-right: 4%;
+  padding-bottom: 80px; /* 下部のタブの高さ分だけパディングを追加 */
+}
 
 /* メニュータブのカードスタイル */
 .product-card {
@@ -38,7 +46,7 @@ body {
   /* Elevation を適用 */
   position: relative;
   --md-elevation-level: 3;
-  margin: 8px; /* カード間のマージン */
+  margin: 16px; /* カード間のマージン */
 }
 
 .product-card .mdc-card__media {
@@ -66,7 +74,7 @@ body {
 
 .product-card h2 {
   font-size: 2.0em; /* タイトルサイズを大きく */
-  margin: 0 0 8px 0;
+  margin: 0 0 8px 8px;
 }
 
 .product-card .name {
@@ -78,6 +86,7 @@ body {
   font-size: 1.5em;
   display: flex;
   justify-content: space-between; /* ボタンを左右に配置 */
+  align-items: center;
   padding: 16px;
 }
 
@@ -124,15 +133,20 @@ body {
 }
 
 .home-product-card .mdc-card__primary-action {
-  padding: 10px; /* パディングを調整 */
+  padding: 4%; /* パディングを調整 */
   color: #333333;
   text-decoration: none;
   display: block;
+  /* 高さを固定 */
+  height: 60px; /* 例として 60px に設定 */
+  display: flex; /* Flexbox を使用 */
+  align-items: center; /* 縦方向中央揃え */
 }
 
 .home-product-card h2 {
   font-size: 1.0em; /* フォントサイズを調整 */
-  margin: 0 0 4px 0; /* マージンを調整 */
+  /* テキストの折り返しを許可 */
+  word-wrap: break-word;
 }
 
 .home-product-card .name {
@@ -143,7 +157,8 @@ body {
   font-size: 1.2em;
   display: flex;
   justify-content: space-between; /* ボタンを左右に配置 */
-  padding: 8px;
+  padding: 4%;
+  align-items: center;
 }
 
 .home-product-card .status-button {
@@ -173,12 +188,12 @@ body {
 
 /* タブのスタイル */
 md-tabs {
-  --md-sys-color-surface-tint: #D84315; /* サーフェストンカラーをオレンジに設定 */
-  --md-sys-color-primary: #D84315;      /* プライマリカラーをオレンジに設定 */
-  --md-primary-tab-active-indicator-color: #D84315; /* アクティブなタブのインジケーターの色を変更 */
+  --md-sys-color-surface: #fff;
+  --md-sys-color-surface-tint: #981d30; /* サーフェストンカラーをオレンジに設定 */
+  --md-sys-color-primary: #981d30;      /* プライマリカラーをオレンジに設定 */
+  --md-primary-tab-active-indicator-color: #981d30; /* アクティブなタブのインジケーターの色を変更 */
   position: fixed; /* 画面に固定 */
-  left: 0;
-  width: 100%;
+  width: 104%;
   z-index: 10; /* 他の要素の上に表示 */
 }
 
@@ -187,7 +202,35 @@ md-tabs {
   top: 0; 
 }
 
+#home-content h3{
+  padding-left: 4%;
+}
+#home-content h4{
+  margin-top: -10px;
+  padding-left: 4%;
+}
+
+
+.no-menu-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100%; /* 親要素の高さ全体を占める */
+  padding-top: 64px; /* 高さを自動調整 */
+  padding-bottom: 64px; /* 高さを自動調整 */
+}
+
+.no-menu-message .category-icon {
+  font-size: 50vw; /* アイコンサイズを調整 */
+  color: #D84315;
+}
+
+.no-menu-message h2 {
+  text-align: center;
+}
+
 /* 下部のタブ */
 body > md-tabs {
   bottom: 0;
 }
+
